@@ -5,11 +5,12 @@
  * Exemplo de uso:
  * $cpf_cnpj  = new ValidaCPFCNPJ('71569042000196');
  * $formatado = $cpf_cnpj->formata(); // 71.569.042/0001-96
+ * $valida    = $cpf_cnpj->valida('71569042000196'); // True -> Válido
  * $valida    = $cpf_cnpj->valida(); // True -> Válido
  *
  * @package  valida-cpf-cnpj
  * @author   Luiz Otávio Miranda <contato@tutsup.com>
- * @version  v1.3
+ * @version  v1.4
  * @access   public
  * @see      http://www.tutsup.com/
  */
@@ -169,11 +170,12 @@ class ValidaCPFCNPJ
 	 * Valida
 	 *
 	 * Valida o CPF ou CNPJ
-	 *
+	 *@param $valor valor do cpf ou cnpj para ser validado se não passar nada a função usa o do método construtor.
 	 * @access public
 	 * @return bool      True para válido, false para inválido
 	 */
-	public function valida () {
+	public function valida ($valor = null) {
+		$this->retirar_pontos($valor);
 		// Valida CPF
 		if ( $this->verifica_cpf_cnpj() === 'CPF' ) {
 			// Retorna true para cpf válido
@@ -243,6 +245,17 @@ class ValidaCPFCNPJ
 		}
 
 		return true;
+	}
+
+	/**
+	 * Pega e retira os caracteres que não são aceitos pela função
+	 * @param string $valor valor do cpf ou cnpj que será retirado os caracteres não aceitos
+	 */
+	protected function retirar_pontos($valor){
+		if($valor != null){
+			$this->valor = preg_replace( '/[^0-9]/', '', $valor );
+			$this->valor = (string)$this->valor;
+		}
 	}
 }
 ?>
