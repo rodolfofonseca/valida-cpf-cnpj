@@ -16,6 +16,7 @@
  */
 class ValidaCPFCNPJ
 {
+    private $valor;
 	/**
 	 * Configura o valor (Construtor)
 	 *
@@ -61,7 +62,7 @@ class ValidaCPFCNPJ
 	 * @param  string    $digitos      Os digitos desejados
 	 * @param  int       $posicoes     A posição que vai iniciar a regressão
 	 * @param  int       $soma_digitos A soma das multiplicações entre posições e dígitos
-	 * @return int                     Os dígitos enviados concatenados com o último dígito
+	 * @return string                     Os dígitos enviados concatenados com o último dígito
 	 */
 	protected function calc_digitos_posicoes( $digitos, $posicoes = 10, $soma_digitos = 0 ) {
 		// Faz a soma dos dígitos com a posição
@@ -163,7 +164,9 @@ class ValidaCPFCNPJ
 		// Verifica se o CNPJ gerado é idêntico ao enviado
 		if ( $cnpj === $cnpj_original ) {
 			return true;
-		}
+		}else{
+            return false;
+        }
 	}
 
 	/**
